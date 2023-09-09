@@ -8,29 +8,37 @@ export default function App() {
   // Estados con hooks
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
+  const [value3, setValue3] = useState("");
   const [result, setResult] = useState("");
+  const [observacion, setObservacion] = useState("");
 
   // Métodos
   let calculate = (oper) => {
     let mresult = 0;
     let mvalue1 = parseFloat(value1);
     let mvalue2 = parseFloat(value2);
-    switch (oper) {
-      case "+":
-        mresult = mvalue1 + mvalue2;
-        break;
-      case "-":
-        mresult = mvalue1 - mvalue2;
-        break;
-      case "*":
-        mresult = mvalue1 * mvalue2;
-        break;
-      case "/":
-        mresult = mvalue1 / mvalue2;
-        break;
+    let mvalue3 = parseFloat(value3);
+    
+    if(oper){
+      mresult= (mvalue1 + mvalue2 + mvalue3) % 3
     }
-    setResult(mresult.toFixed(2));
+    setResult(mresult.toFixed(3));
   };
+
+  function observaciones(){
+    if (calculate >= 3.0){
+      return "Ganaste"
+    }
+
+    if (calculate <= 2.9 && 2.0){
+      return "habilitas"
+    }
+
+    if (calculate <= 1.9){
+      return "perdiste"
+    }
+    
+  }
 
   return (
     <View style={mystyles.container}>
@@ -57,6 +65,15 @@ export default function App() {
           value={value2}
         />
 
+        <TextInput
+          style={{ marginTop: 10, fontSize: 18 }}
+          label="valor 3"
+          left={<TextInput.Icon icon="counter" />}
+          onChangeText={(value3) => setValue3(value3)}
+          value={value3}
+        />
+
+
         <Text style={{ fontWeight: "bold" }}>RESULT</Text>
         <Text
           style={{
@@ -70,48 +87,43 @@ export default function App() {
             height: 30,
             marginBottom: 10,
             textAlign: "center",
-            fontSize:15
+            fontSize: 15,
           }}
         >
           {result}
         </Text>
 
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            style={{ backgroundColor: "orange", padding: 15, borderRadius: 10, fontSize:20
+        <Text style={{ fontWeight: "bold" }}>observacion</Text>
+        <Text
+          style={{
+            borderRadius: 10,
+            borderWidth: 2,
+            borderColor: "orange",
+            padding: 10,
+            fontWeight: "bold",
+            color: "white",
+            width: 200,
+            height: 30,
+            marginBottom: 10,
+            textAlign: "center",
+            fontSize: 15,
           }}
-            onPress={() => calculate("+")}
-          >
-            <Text style={{ color: "white" }}>+</Text>
-          </TouchableOpacity>
-          
+        >
+          {observacion}
+        </Text>
+
+        <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             style={{
               backgroundColor: "orange",
               padding: 15,
               borderRadius: 10,
-              marginLeft: 5,
-              fontSize:20
+              fontSize: 20,
             }}
-            onPress={() => calculate("-")}
+            onPress={() => calculate("Calcular")}
           >
-            <Text style={{ color: "white" }}>-</Text>
+            <Text style={{ color: "white" }}>Calcular</Text>
           </TouchableOpacity>
-
-          <Button
-            icon="alpha-x-circle"
-            mode="contained"
-            onPress={() => calculate("*")}
-          >
-            Multiplicar
-          </Button>
-          <Button
-            icon="slash-forward-box"
-            mode="contained"
-            onPress={() => calculate("/")}
-          >
-            Dividir        
-          </Button>
         </View>
 
         <View style={{ flexDirection: "row", marginTop: 10 }}>
@@ -121,21 +133,13 @@ export default function App() {
             onPress={() => {
               setValue1("");
               setValue2("");
+              setValue3("");
               setResult("");
             }}
           >
             Limpiar
           </Button>
         </View>
-      </View>
-
-      <View
-        style={[
-          mytext.text,
-          { flex: 2, alignItems: "center", alignContent: "center" },
-        ]}
-      >
-        <Text>Footer</Text>
       </View>
     </View>
   );

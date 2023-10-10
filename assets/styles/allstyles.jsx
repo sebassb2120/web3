@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const mystyles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'black',
+      background: 'grey',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -11,8 +11,13 @@ const mystyles = StyleSheet.create({
         flex:1,
         backgroundColor:'orange',
 
-    }
+    },
+    image: {
+        flex: 1,
+        justifyContent: 'center',
+      },
 });
+
 
 const mytext = StyleSheet.create({
     text:{
